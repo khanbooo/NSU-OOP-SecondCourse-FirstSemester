@@ -22,10 +22,7 @@ private:
     long long totalAmountOfWords = 0;
 
     // перевести мапу в вектор
-    void convertMapToVector(vector<pair<long long, string>> * vec);
-
-    // очистить мапу
-    void clearMap();
+    void convertMapToVector(vector<pair<long long, string>> * vec) const;
 
     // отспортировать данные
     static void sortStatistic(vector<pair<long long, string>> * vec);
@@ -36,10 +33,14 @@ public:
     void addToStorage(const vector<string>& vec);
 
     // получить данные из хранилища
-    vector<pair<long long, string>> getStatistic();
+    vector<pair<long long, string>> getStatistic() const;
 
-    // получить общее количество слов в хранилище
+    // получить общее количество слов
     long long getTotalAmountOfWords() const;
+
+    // очистить мапу
+    void clearMap();
+
 };
 
 

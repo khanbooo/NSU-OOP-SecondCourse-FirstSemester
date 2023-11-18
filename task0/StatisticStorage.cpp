@@ -14,11 +14,10 @@ void StatisticStorage::sortStatistic(vector<pair<long long, string>> * vec) {
     std::sort(vec->rbegin(), vec->rend());
 }
 
-void StatisticStorage::convertMapToVector(vector<pair<long long, string>> * vec) {
+void StatisticStorage::convertMapToVector(vector<pair<long long, string>> * vec) const{
     for (const auto& wordStatistic: mp){
         vec->emplace_back(wordStatistic.second, wordStatistic.first);
     }
-    clearMap();
 }
 
 void StatisticStorage::addToStorage(const vector<string>& vec) {
@@ -28,7 +27,7 @@ void StatisticStorage::addToStorage(const vector<string>& vec) {
     }
 }
 
-vector<pair<long long, string>> StatisticStorage::getStatistic() {
+vector<pair<long long, string>> StatisticStorage::getStatistic() const{
     vector<pair<long long, string>> vec;
     vec.reserve(mp.size());
     convertMapToVector(&vec);
@@ -37,5 +36,5 @@ vector<pair<long long, string>> StatisticStorage::getStatistic() {
 }
 
 long long StatisticStorage::getTotalAmountOfWords() const {
-    return totalAmountOfWords;
+    return this->totalAmountOfWords;
 }

@@ -19,8 +19,13 @@ int main(int argc, char** argv) {
     fileReader.close();
     CSVFileWriter csvFileWriter(argv[2]);
     csvFileWriter.open();
-    csvFileWriter.writeData(storageStatistic.getStatistic(),
-                            storageStatistic.getTotalAmountOfWords());
+    for (const auto& strToWrite: storageStatistic.getStatistic()){
+        const vector<string> v = {strToWrite.second, std::to_string(strToWrite.first),
+                                  std::to_string((double)strToWrite.first /
+                                  (double)storageStatistic.getTotalAmountOfWords() * 100)};
+        csvFileWriter.writeData(v, ';');
+    }
+    storageStatistic.clearMap();
     csvFileWriter.close();
     return 0;
 }

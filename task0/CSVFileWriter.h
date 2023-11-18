@@ -29,8 +29,7 @@ public:
     void close();
 
     // записать данные в файл
-    void writeData(const vector<pair<long long, string>>& vec,
-                   long long totalAmountOfWords);
+    void writeData(const vector<string>& vec, char delimiter);
 };
 
 

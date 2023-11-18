@@ -14,8 +14,11 @@ TEST(CSVFileWriterTests, EmptyText) {
 
     CSVFileWriter csvFileWriter("output.csv");
     csvFileWriter.open();
-    csvFileWriter.writeData(storageStatistic.getStatistic(),
-                            storageStatistic.getTotalAmountOfWords());
+    for (const auto& strToWrite: storageStatistic.getStatistic()){
+        const vector<string> v = {strToWrite.second, std::to_string(strToWrite.first),
+                                  std::to_string(storageStatistic.getTotalAmountOfWords())};
+        csvFileWriter.writeData(v, ';');
+    }
     csvFileWriter.close();
 
     std::ifstream test_file("output.csv");
@@ -34,22 +37,26 @@ TEST(CSVFileWriterTests, SomeText) {
 
     CSVFileWriter csvFileWriter("output.csv");
     csvFileWriter.open();
-    csvFileWriter.writeData(storageStatistic.getStatistic(),
-                            storageStatistic.getTotalAmountOfWords());
+    for (const auto& strToWrite: storageStatistic.getStatistic()){
+        const vector<string> v = {strToWrite.second, std::to_string(strToWrite.first),
+                                  std::to_string((double)strToWrite.first /
+                                                 (double)storageStatistic.getTotalAmountOfWords() * 100)};
+        csvFileWriter.writeData(v, ';');
+    }
     csvFileWriter.close();
 
     std::ifstream test_file("output.csv");
     std::string line;
 
     std::getline(test_file, line);
-    ASSERT_EQ(line, "aboba;3;42.8571");
+    ASSERT_EQ(line, "aboba;3;42.857143");
 
     std::getline(test_file, line);
-    ASSERT_EQ(line, "abibeb;2;28.5714");
+    ASSERT_EQ(line, "abibeb;2;28.571429");
 
     std::getline(test_file, line);
-    ASSERT_EQ(line, "bob;1;14.2857");
+    ASSERT_EQ(line, "bob;1;14.285714");
 
     std::getline(test_file, line);
-    ASSERT_EQ(line, "biboba;1;14.2857");
+    ASSERT_EQ(line, "biboba;1;14.285714");
 }

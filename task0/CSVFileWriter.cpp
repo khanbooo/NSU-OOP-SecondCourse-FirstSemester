@@ -16,10 +16,9 @@ void CSVFileWriter::close() {
     f.close();
 }
 
-void CSVFileWriter::writeData(const vector<pair<long long int, string>>& vec,
-                              long long totalAmountOfWords) {
-    for (const auto& data: vec){
-        f << data.second << ';' << data.first << ';' <<
-          ((double)data.first) / (double)totalAmountOfWords * 100 << '\n';
+void CSVFileWriter::writeData(const vector<string>& vec, const char delimiter) {
+    for (int i = 0; i < vec.size() - 1; i++){
+        f << vec[i] << delimiter;
     }
+    f << vec[vec.size() - 1] << '\n';
 }

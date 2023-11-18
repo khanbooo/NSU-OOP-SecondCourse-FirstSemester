@@ -15,11 +15,26 @@ TEST(StatisticStorageTests, SomeText) {
     StatisticStorage storageStatistic;
     storageStatistic.addToStorage(test);
 
-    pair<vector<pair<long long, string>>, unsigned short> result =
-            {storageStatistic.getStatistic(), storageStatistic.getTotalAmountOfWords()};
+    vector<pair<long long, string>> result = storageStatistic.getStatistic();
 
-    pair<vector<pair<long long, string>>, unsigned short>
-    correctAnswer = {{{3, "aboba"}, {2, "abibeb"}, {1, "bob"}, {1, "biboba"}}, 7};
+    vector<pair<long long, string>>
+    correctAnswer = {{3, "aboba"}, {2, "abibeb"}, {1, "bob"}, {1, "biboba"}};
+
+    ASSERT_EQ(result, correctAnswer);
+}
+
+TEST(StatisticStorageTests, RegisterDependencyTest) {
+    vector<string> test = {"ABoBa", "aboba", "biboba", "abibeb",
+                           "abibeb", "aboba", "bob"};
+
+    StatisticStorage storageStatistic;
+    storageStatistic.addToStorage(test);
+
+    vector<pair<long long, string>> result =
+            {storageStatistic.getStatistic()};
+
+    vector<pair<long long, string>>
+            correctAnswer = {{2, "aboba"}, {2, "abibeb"}, {1, "bob"}, {1, "biboba"}, {1, "ABoBa"}};
 
     ASSERT_EQ(result, correctAnswer);
 }
