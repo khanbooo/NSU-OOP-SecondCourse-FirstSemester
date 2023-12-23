@@ -2,19 +2,35 @@
 // Created by shark on 19.11.2023.
 //
 
+#include <string>
+#include <vector>
+using namespace std;
+
 #ifndef TASK1_BITARRAY_H
 #define TASK1_BITARRAY_H
 
 
-class BitArray
-{
+class BitArray {
+private:
+    std::vector< unsigned int> array;
+    unsigned int numOfBits = 0;
+
+    class Reference{
+    private:
+        BitArray& bitArray;
+        unsigned int ind;
+    public:
+        Reference(BitArray& BitArray, unsigned int index);
+        Reference& operator=(bool value);
+        explicit operator bool();
+    };
 public:
-    BitArray();
-    ~BitArray();
+    BitArray() = default;
+    ~BitArray() = default;
 
     //Конструирует массив, хранящий заданное количество бит.
-    //Первые sizeof(long) бит можно инициализровать с помощью параметра value.
-    explicit BitArray(int num_bits, unsigned long value = 0);
+    //Первые sizeof(unsigned long) бит можно инициализровать с помощью параметра value.
+    explicit BitArray(unsigned int num_bits,  unsigned long value = 0);
     BitArray(const BitArray& b);
 
 
@@ -26,7 +42,7 @@ public:
 
     //Изменяет размер массива. В случае расширения, новые элементы
     //инициализируются значением value.
-    void resize(int num_bits, bool value = false);
+    void resize( unsigned int num_bits, bool value = false);
     //Очищает массив.
     void clear();
     //Добавляет новый бит в конец массива. В случае необходимости
@@ -42,21 +58,23 @@ public:
     BitArray& operator^=(const BitArray& b);
 
     //Битовый сдвиг с заполнением нулями.
-    BitArray& operator<<=(int n);
-    BitArray& operator>>=(int n);
-    BitArray operator<<(int n) const;
-    BitArray operator>>(int n) const;
+    BitArray& operator<<=(unsigned int n);
+    BitArray& operator>>=(unsigned int n);
+    BitArray operator<<(unsigned int n) const;
+    BitArray operator>>(unsigned int n) const;
 
 
     //Устанавливает бит с индексом n в значение val.
-    BitArray& set(int n, bool val = true);
+    void set(unsigned int n, bool val = true);
     //Заполняет массив истиной.
     BitArray& set();
 
     //Устанавливает бит с индексом n в значение false.
-    BitArray& reset(int n);
+    void reset(unsigned int n);
     //Заполняет массив ложью.
     BitArray& reset();
+
+    bool getBit(unsigned int ind) const;
 
     //true, если массив содержит истинный бит.
     bool any() const;
@@ -65,26 +83,28 @@ public:
     //Битовая инверсия
     BitArray operator~() const;
     //Подсчитывает количество единичных бит.
-    int count() const;
+    unsigned int count() const;
 
 
     //Возвращает значение бита по индексу i.
-    bool operator[](int i) const;
+    BitArray::Reference operator[]( unsigned int i) ;
 
-    int size() const;
-    int capacity() const;
+
+    unsigned int size() const;
     bool empty() const;
 
     //Возвращает строковое представление массива.
-    std::string to_string() const;
+    string to_string();
+
+    friend bool operator==(const BitArray & a, const BitArray & b);
+    friend bool operator!=(const BitArray & a, const BitArray & b);
+
+    friend BitArray operator&(const BitArray& b1, const BitArray& b2);
+    friend BitArray operator|(const BitArray& b1, const BitArray& b2);
+    friend BitArray operator^(const BitArray& b1, const BitArray& b2);
 };
 
-bool operator==(const BitArray & a, const BitArray & b);
-bool operator!=(const BitArray & a, const BitArray & b);
 
-BitArray operator&(const BitArray& b1, const BitArray& b2);
-BitArray operator|(const BitArray& b1, const BitArray& b2);
-BitArray operator^(const BitArray& b1, const BitArray& b2);
 
 
 #endif //TASK1_BITARRAY_H
