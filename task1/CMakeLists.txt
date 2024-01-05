@@ -7,4 +7,5 @@ add_executable(task1
         BitArray.cpp
         BitArray.h
         BitArrayException.cpp
+        Google_Tests/bitarray_tests.cpp
 )
