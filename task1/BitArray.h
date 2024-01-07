@@ -4,6 +4,8 @@
 
 #include <string>
 #include <vector>
+#include "BitArrayException.cpp"
+
 using namespace std;
 
 #ifndef TASK1_BITARRAY_H

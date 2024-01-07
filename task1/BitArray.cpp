@@ -2,8 +2,6 @@
 // Created by shark on 19.11.2023.
 //
 
-#include <cstdlib>
-#include <iostream>
 #include <algorithm>
 #include "BitArray.h"
 
@@ -41,7 +39,7 @@ BitArray::BitArray(int numBits, unsigned long long int value) {
     }
 
     int size = (numBits - 1) / SIZE_OF_BLOCK + 1;
-    numOfBits = size;
+    numOfBits = numBits;
     array.resize(size);
     array[0] = value;
 }
